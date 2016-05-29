@@ -14,7 +14,7 @@ May 29, 2016
 
 ## Loading and preprocessing the data
 
-1. Load the source data set out of **activity.csv** source file:
+- Load the source data set out of **activity.csv** source file:
 
 
 ```r
@@ -22,7 +22,7 @@ May 29, 2016
     sourceData <- read.csv(file = 'activity.csv', header = TRUE, sep = ",")
 ```
 
-2. Convert fields to the right format
+-  Convert fields to the right format
 
 
 ```r
@@ -35,14 +35,14 @@ May 29, 2016
 
 ## What is mean total number of steps taken per day?
 
-1. Remove NA Data
+-  Remove NA Data
 
 
 ```r
     noNAData <- na.omit(sourceData)
 ```
 
-2. Aggregate steps by date
+-  Aggregate steps by date
 
 
 ```r
@@ -51,7 +51,7 @@ May 29, 2016
     colnames(aggTotalnoNAData) <- c("date","steps")
 ```
 
-3. Print histogram that shows steps frequency
+-  Print histogram that shows steps frequency
 
 
 ```r
@@ -62,7 +62,7 @@ May 29, 2016
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
-4. Display the mean and median
+-  Display the mean and median
 
 
 ```r
@@ -84,7 +84,7 @@ May 29, 2016
     
 ## What is the average daily activity pattern?
 
-1. Remove NA and aggregate mean step value by interval
+-  Remove NA and aggregate mean step value by interval
 
 
 ```r
@@ -98,7 +98,7 @@ May 29, 2016
     colnames(aggMeannoNAData) <- c("interval","steps")
 ```
 
-2. Build a line plot to show steps by interval
+-  Build a line plot to show steps by interval
 
 
 ```r
@@ -120,7 +120,7 @@ aggMeannoNAData[which.max(aggMeannoNAData$steps),1]
 
 ## Imputing missing values
 
-1. Build a function to automatically replace NA values with the mean values for each interval. This function will be called whenever we need a fixed data set.
+-  Build a function to automatically replace NA values with the mean values for each interval. This function will be called whenever we need a fixed data set.
 
 
 ```r
@@ -151,7 +151,7 @@ getFixedNAData <- function(sourceData) {
 
 Here, we extract rows with NA value first, then get the mean step value for interval and update the mean results back in the original data set using the **merge** function. 
 
-2. Get aggregate of total steps for each date based on the fixed data set.
+-  Get aggregate of total steps for each date based on the fixed data set.
 
 
 ```r
@@ -162,7 +162,7 @@ Here, we extract rows with NA value first, then get the mean step value for inte
     colnames(aggTotalData) <- c("date","steps")
 ```
 
-3. Display histogram that shows step distribution
+-  Display histogram that shows step distribution
 
 
 ```r
@@ -173,7 +173,7 @@ Here, we extract rows with NA value first, then get the mean step value for inte
 
 ![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
-4. Show the mean and median from this data set
+-  Show the mean and median from this data set
 
 
 ```r
@@ -230,7 +230,7 @@ As expected, the results are identical as the highest value is also found on ste
  
 ## Are there differences in activity patterns between weekdays and weekends?
 
-1. First, let's reuse the fixed NA data set and add a new column in the data set using the transform function to check whether the date is week end or not.
+-  First, let's reuse the fixed NA data set and add a new column in the data set using the transform function to check whether the date is week end or not.
 
 
 ```r
@@ -242,7 +242,7 @@ As expected, the results are identical as the highest value is also found on ste
         ))
 ```
  
-2. Compute mean step value by interval for both week days and week end days
+-  Compute mean step value by interval for both week days and week end days
 
 
 ```r
@@ -260,7 +260,7 @@ As expected, the results are identical as the highest value is also found on ste
         colnames(fixedNADataMeanByIntervalWE) <- c("interval","steps")
 ```
  
- 3. Build two line plots for each case
+ -  Build two line plots for each case
 
 
 ```r

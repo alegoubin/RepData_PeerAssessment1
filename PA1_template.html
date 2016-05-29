@@ -130,14 +130,14 @@ $(document).ready(function () {
 <pre><code>## [1] &quot;en_US.UTF-8&quot;</code></pre>
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
-<ol style="list-style-type: decimal">
+<ul>
 <li>Load the source data set out of <strong>activity.csv</strong> source file:</li>
-</ol>
+</ul>
 <pre class="r"><code>    ## Read source data
     sourceData &lt;- read.csv(file = &#39;activity.csv&#39;, header = TRUE, sep = &quot;,&quot;)</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Convert fields to the right format</li>
-</ol>
+</ul>
 <pre class="r"><code>    ## Convert fields into correct format
     sourceData$date &lt;- as.Date(sourceData$date,format = &quot;%Y-%m-%d&quot;)
     sourceData$steps &lt;- as.numeric(sourceData$steps)
@@ -145,26 +145,26 @@ $(document).ready(function () {
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
-<ol style="list-style-type: decimal">
+<ul>
 <li>Remove NA Data</li>
-</ol>
+</ul>
 <pre class="r"><code>    noNAData &lt;- na.omit(sourceData)</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Aggregate steps by date</li>
-</ol>
+</ul>
 <pre class="r"><code>    aggTotalnoNAData &lt;-
         aggregate(noNAData$steps,by = list(date = noNAData$date), FUN = sum)
     colnames(aggTotalnoNAData) &lt;- c(&quot;date&quot;,&quot;steps&quot;)</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ul>
 <li>Print histogram that shows steps frequency</li>
-</ol>
+</ul>
 <pre class="r"><code>    with(aggTotalnoNAData,hist(
         steps,col = &quot;blue&quot;,xlab = &quot;Steps&quot;,main = &quot;Steps Frequency&quot;
     ))</code></pre>
 <p><img src="PA1_template_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
-<ol start="4" style="list-style-type: decimal">
+<ul>
 <li>Display the mean and median</li>
-</ol>
+</ul>
 <pre class="r"><code>    mean(aggTotalnoNAData$steps,na.rm = TRUE)</code></pre>
 <pre><code>## [1] 10766.19</code></pre>
 <pre class="r"><code>    median(aggTotalnoNAData$steps,na.rm = TRUE)</code></pre>
@@ -172,9 +172,9 @@ $(document).ready(function () {
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
 <h2>What is the average daily activity pattern?</h2>
-<ol style="list-style-type: decimal">
+<ul>
 <li>Remove NA and aggregate mean step value by interval</li>
-</ol>
+</ul>
 <pre class="r"><code>    #remove na
     noNAData &lt;- na.omit(sourceData)
     
@@ -183,9 +183,9 @@ $(document).ready(function () {
         aggregate(noNAData$steps,by = list(interval = noNAData$interval), FUN =
                       mean)
     colnames(aggMeannoNAData) &lt;- c(&quot;interval&quot;,&quot;steps&quot;)</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Build a line plot to show steps by interval</li>
-</ol>
+</ul>
 <pre class="r"><code>    with(
         aggMeannoNAData,plot(
             x = interval,y = steps,type = &quot;l&quot;,main = &quot;Steps / Interval (Average)&quot;,xlab =
@@ -198,9 +198,9 @@ $(document).ready(function () {
 </div>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
-<ol style="list-style-type: decimal">
+<ul>
 <li>Build a function to automatically replace NA values with the mean values for each interval. This function will be called whenever we need a fixed data set.</li>
-</ol>
+</ul>
 <pre class="r"><code>getFixedNAData &lt;- function(sourceData) {
     
     #compute mean by interval
@@ -225,24 +225,24 @@ $(document).ready(function () {
     
 }</code></pre>
 <p>Here, we extract rows with NA value first, then get the mean step value for interval and update the mean results back in the original data set using the <strong>merge</strong> function.</p>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Get aggregate of total steps for each date based on the fixed data set.</li>
-</ol>
+</ul>
 <pre class="r"><code>    fixedNAData &lt;- getFixedNAData(sourceData)
     
     aggTotalData &lt;-
         aggregate(fixedNAData$steps,by = list(date = fixedNAData$date), FUN = sum)
     colnames(aggTotalData) &lt;- c(&quot;date&quot;,&quot;steps&quot;)</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ul>
 <li>Display histogram that shows step distribution</li>
-</ol>
+</ul>
 <pre class="r"><code>    with(aggTotalData,hist(
         steps,col = &quot;blue&quot;,xlab = &quot;Steps&quot;,main = &quot;Steps Frequency&quot;
     ))</code></pre>
 <p><img src="PA1_template_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
-<ol start="4" style="list-style-type: decimal">
+<ul>
 <li>Show the mean and median from this data set</li>
-</ol>
+</ul>
 <pre class="r"><code>    mean(aggTotalData$steps,na.rm = TRUE)</code></pre>
 <pre><code>## [1] 10766.19</code></pre>
 <pre class="r"><code>    median(aggTotalData$steps,na.rm = TRUE)</code></pre>
@@ -272,18 +272,18 @@ $(document).ready(function () {
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
-<ol style="list-style-type: decimal">
-<li>First, let’s reuse the fixed NA data set and add a new column in the data set using the transform function to check whether the date is week end or not.</li>
-</ol>
+<ul>
+<li>First, let's reuse the fixed NA data set and add a new column in the data set using the transform function to check whether the date is week end or not.</li>
+</ul>
 <pre class="r"><code>    fixedNAData &lt;- getFixedNAData(sourceData)
     
     fixedNAData &lt;-
         transform(fixedNAData,weekdayflag = ifelse(
             weekdays(date) %in% c(&quot;Saturday&quot;,&quot;Sunday&quot;),&quot;Week End&quot;,&quot;Week Day&quot;
         ))</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Compute mean step value by interval for both week days and week end days</li>
-</ol>
+</ul>
 <pre class="r"><code>    fixedNADataMeanByIntervalWD &lt;-
         aggregate(
         fixedNAData[fixedNAData$weekdayflag == &quot;Week Day&quot;,]$steps,by = list(interval =    fixedNAData[fixedNAData$weekdayflag == &quot;Week Day&quot;,]$interval), FUN =
@@ -296,9 +296,9 @@ $(document).ready(function () {
         )
         colnames(fixedNADataMeanByIntervalWD) &lt;- c(&quot;interval&quot;,&quot;steps&quot;)
         colnames(fixedNADataMeanByIntervalWE) &lt;- c(&quot;interval&quot;,&quot;steps&quot;)</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ul>
 <li>Build two line plots for each case</li>
-</ol>
+</ul>
 <pre class="r"><code>     par(mfrow = c(2, 1))
     with(
         fixedNADataMeanByIntervalWD,plot(
